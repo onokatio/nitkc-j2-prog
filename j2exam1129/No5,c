@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define NUM 5
+#define MAX 100
+
+void disp_filename(char **x);
+
+int main(void)
+{
+  char filename[][MAX] = {"travel.jpeg",
+		      "kyouto_temple.jpg",
+		      "flower_fes.jpeg",
+		      "R0005237.jpg",
+		      "SOb80617.jpeg"};
+  int i,j;
+	int length[5];
+	char **new_filename;
+	new_filename = (char **)malloc(sizeof(char *)*5);
+ 
+	printf("(1)\n");
+	printf("%s\n",filename[2]);
+
+	printf("\n(2)\n");
+	for(i=0; filename[2][i] != '.' ; i++){
+		printf("%c",filename[2][i]);
+	}
+	printf(".jpg\n");
+
+	printf("\n(3)\n");
+	for(j=0; j<5 ; j++){
+		for(i=0; filename[j][i] != '.' ; i++){
+			printf("%c",filename[j][i]);
+		}
+		printf(".jpg\n");
+	}
+
+	printf("\n(4)\n");
+	for(j=0; j<5 ; j++){
+		for(i=0; filename[j][i] != '.' ; i++){}
+		new_filename[j] = (char *)malloc(sizeof(char)*(i+4));
+		//printf("%d\n",length[j]);
+	}
+	for(j=0; j<5 ; j++){
+		for(i=0; filename[j][i] != '.' ; i++){
+			new_filename[j][i] = filename[j][i];
+		}
+		new_filename[j][i+0] = '.';
+		new_filename[j][i+1] = 'j';
+		new_filename[j][i+2] = 'p';
+		new_filename[j][i+3] = 'g';
+		new_filename[j][i+4] = '\0';
+
+	}
+	disp_filename(new_filename);
+  return 0;
+}
+ 
+void disp_filename(char **x)
+{
+  int i;
+
+  for (i=0; i<NUM; i++) {
+    printf("%s\n", x[i]);
+  }
+  
+}
