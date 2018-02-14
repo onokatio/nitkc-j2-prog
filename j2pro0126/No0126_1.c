@@ -15,21 +15,23 @@ struct parameter {
 };
 
 void initialize(struct parameter player[]);
-void disp_array(struct parameter player[], int ATT_MAX_PLA);
-int comparison(struct parameter player[]);
+void disp_array(struct parameter player[]);
+void HP_sort(struct parameter player[]);
+void swap(struct parameter *o, struct parameter *n);
 
 int main(void)
 {
   struct parameter player[PLAYER];
-  int ATT_MAX_PLA;
 
   srand(1);
 
   initialize(player);
 
-  ATT_MAX_PLA= comparison(player);
+  disp_array(player);
 
-  disp_array(player, ATT_MAX_PLA);
+  HP_sort(player);
+
+  disp_array(player);
 
   return 0;
 }
@@ -52,7 +54,7 @@ void initialize(struct parameter player[])
 
 }
 
-void disp_array(struct parameter player[], int ATT_MAX_PLA)
+void disp_array(struct parameter player[])
 {
   int i;
 
@@ -64,22 +66,26 @@ void disp_array(struct parameter player[], int ATT_MAX_PLA)
     printf("%2d %2d %.2f %.2f\n", 
 	   player[i].hp, player[i].mp, player[i].attack, player[i].defence);
   }
-
-  printf("\n");
-  printf("ATTACK MAX PLAYER: [%2d] %s %2d %2d %.2f %.2f\n", 
-		  player[ATT_MAX_PLA].no, player[ATT_MAX_PLA].name, player[ATT_MAX_PLA].hp, player[ATT_MAX_PLA].mp, player[ATT_MAX_PLA].attack, player[ATT_MAX_PLA].defence);
-
 }
 
-int comparison(struct parameter player[]){
-	int i;
-	int ATT_MAX_PLA= 0;
+void HP_sort(struct parameter player[]){
+	int i, j;
 
 	for(i= 0; i< PLAYER; i++){
-		if(player[ATT_MAX_PLA].attack< player[i].attack){
-			ATT_MAX_PLA= i;
+		for(j= PLAYER- 1; j> i ; j--){
+
+			if(player[j].hp> player[j- 1].hp){
+
+				swap(&player[j], &player[j- 1]);
+			}
 		}
 	}
+}
 
-	return ATT_MAX_PLA;
+void swap(struct parameter *o, struct parameter *n){
+	struct parameter keep;
+
+	keep= *n;
+	*n= *o;
+	*o= keep;
 }

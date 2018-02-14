@@ -6,7 +6,8 @@
 #define NAME 8+1
 
 void initialize(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[]);
-void disp_array(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[]);
+void disp_array(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[], int ATT_MAX_PLA);
+int comparison(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[]);
 
 int main(void)
 {
@@ -16,15 +17,18 @@ int main(void)
   int mp[PLAYER];
   double attack[PLAYER];
   double defence[PLAYER];
-  int seed;
-  
-  seed = (unsigned)time(NULL);
-  printf("seed = %d\n", seed);
-  srand(seed);
+  double speed[PLAYER];
+  double intelligence[PLAYER];
+  int player_no;
+  int ATT_MAX_PLA;
+
+  srand((unsigned)time(NULL));
 
   initialize(no, name, hp, mp, attack, defence);
 
-  disp_array(no, name, hp, mp, attack, defence);
+  ATT_MAX_PLA= comparison(no, name, hp, mp, attack, defence);
+
+  disp_array(no, name, hp, mp, attack, defence, ATT_MAX_PLA);
 
   return 0;
 }
@@ -47,21 +51,32 @@ void initialize(int no[], char name[][NAME], int hp[], int mp[], double attack[]
 
 }
 
-void disp_array(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[])
+void disp_array(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[], int ATT_MAX_PLA)
 {
   int i;
-	int max=0;
 
-  printf(" No  Name      HP  MP  AT     DE \n");
+  printf(" No  Name     HP MP AT   DE \n");
   for (i=0; i<PLAYER; i++) {
     printf("[%2d] ", no[i]);
     printf("%s", name[i]);
     printf(" ");
-    printf("%3d %3d  %.2f  %.2f\n", hp[i], mp[i], attack[i], defence[i]);
-		if(attack[i] > attack[max]) max=i;
+    printf("%2d %2d %.2f %.2f\n", hp[i], mp[i], attack[i], defence[i]);
   }
-	i = max;
-  printf("%3d %3d  %.2f  %.2f\n", hp[i], mp[i], attack[i], defence[i]);
+
+  printf("\n");
+  printf("MAX ATTACK PLAYER: [%2d] %s %2d %2d %.2f %.2f\n", no[ATT_MAX_PLA], name[ATT_MAX_PLA], hp[ATT_MAX_PLA], mp[ATT_MAX_PLA], attack[ATT_MAX_PLA], defence[ATT_MAX_PLA]);
 
 }
 
+int comparison(int no[], char name[][NAME], int hp[], int mp[], double attack[], double defence[]){
+	int i;
+	int ATT_MAX_PLA= 0;
+
+	for(i= 0; i< PLAYER; i++){
+		if(attack[ATT_MAX_PLA]< attack[i]){
+			ATT_MAX_PLA= i;
+		}
+	}
+
+	return ATT_MAX_PLA;
+}

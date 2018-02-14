@@ -9,7 +9,7 @@ int main(void)
   pt[1] = 1115;
   pt[2] = 1116;
 
-  for (i=0; i<3; i++) {
+  for (i=0; i<3000; i++) {
     printf("pt[%d]=%d\n", i, pt[i]);
   }
 
